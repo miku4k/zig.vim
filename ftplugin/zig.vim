@@ -35,10 +35,10 @@ endif
 
 let &l:define='\v(<fn>|<const>|<var>|^\s*\#\s*define)'
 
-if !exists('g:zig_std_dir') && exists('*zon_decode') && executable('zig')
+if !exists('g:zig_std_dir') && executable('zig')
     silent let s:env = system('zig env')
     if v:shell_error == 0
-        let g:zig_std_dir = zon_decode(s:env)['std_dir']
+        let g:zig_std_dir = matchlist(s:env, '\.std_dir = "\([^\n]*\)",')[1]
     endif
     unlet! s:env
 endif
